@@ -1,28 +1,34 @@
 const got = require('got');
 require('dotenv').config();
 
-const apiKey = process.env.API_KEY;
-const apiSecret = process.env.API_SECRET;
+const apiKey = process.env.IMAGGA_API_KEY;
+const apiSecret = process.env.IMAGGA_API_SECRET;
 
 module.exports = async (imageUrl) => {
     try {
         const url = 'https://api.imagga.com/v2/tags?image_url=' + encodeURIComponent(imageUrl);
 
-        const response = await got(url, {username: apiKey, password: apiSecret});
-        const result = JSON.parse(response.body);
+        const res = await got(url, {username: apiKey, password: apiSecret});
+        const result = JSON.parse(res.body);
         let tags = result.result.tags;
+
+        let ourResponse = {
+            state: 'rejected'
+        };
 
         for (let tag of tags) {
             let confidence = tag.confidence;
             let en = tag.tag.en;
 
             if (en.toLowerCase() === 'vehicle') {
-                return confidence;
+                ourResponse.state = 'approved';
+                break;
             }
         }
 
-        return -1;
+        ourResponse.category = tags[0].tag.en;
+        return ourResponse;
     } catch (error) {
-        console.log(error.response.body);
+        console.log(error);
     }
 };
