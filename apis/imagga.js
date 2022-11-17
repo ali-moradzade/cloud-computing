@@ -21,8 +21,10 @@ module.exports = async (imageUrl) => {
             let en = tag.tag.en;
 
             if (en.toLowerCase() === 'vehicle') {
-                ourResponse.state = 'approved';
-                break;
+                if (confidence >= 50) {
+                    ourResponse.state = 'approved';
+                    break;
+                }
             }
         }
 
