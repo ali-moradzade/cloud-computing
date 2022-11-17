@@ -1,0 +1,25 @@
+{
+  "name": "cloud-computing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "apis/imagga.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ali-moradzade/cloud-computing.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ali-moradzade/cloud-computing/issues"
+  },
+  "homepage": "https://github.com/ali-moradzade/cloud-computing#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "got": "^11.8.3",
+    "mailgun-js": "^0.22.0"
+  }
+}
