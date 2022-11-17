@@ -54,24 +54,28 @@ function startPublisher() {
             let m = offlinePubQueue.shift();
             if (!m)
                 break;
-            publish(m[0], m[1], m[2]);
+            publish(m[2].toString());
         }
     });
 }
 
-function publish(exchange, routingKey, content) {
+function publish(postId) {
+    let postIdBuffer = Buffer.from(postId);
+    let exchange = "";
+    let routingKey = "jobs";
+
     try {
-        pubChannel.publish(exchange, routingKey, content, {persistent: true},
+        pubChannel.publish(exchange, routingKey, postIdBuffer, {persistent: true},
             function (err) {
                 if (err) {
                     console.error("[AMQP] publish", err);
-                    offlinePubQueue.push([exchange, routingKey, content]);
+                    offlinePubQueue.push([exchange, routingKey, postIdBuffer]);
                     pubChannel.connection.close();
                 }
             });
     } catch (e) {
         console.error("[AMQP] publish", e.message);
-        offlinePubQueue.push([exchange, routingKey, content]);
+        offlinePubQueue.push([exchange, routingKey, postIdBuffer]);
     }
 }
 
@@ -108,9 +112,11 @@ function startWorker() {
     });
 }
 
-// a to-do function
+// TODO: move our work to here
 function work(msg, cb) {
-    console.log("Got msg", msg.content.toString());
+    const postId = msg.content.toString();
+    console.log(postId);
+
     cb(true);
 }
 
@@ -121,8 +127,5 @@ function closeOnErr(err) {
     return true;
 }
 
-setInterval(function () {
-    publish("", "jobs", Buffer.from("work work work"));
-}, 1000);
-
-module.exports = start;
+exports.start = start;
+exports.publish = publish;

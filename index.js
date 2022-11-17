@@ -1,6 +1,7 @@
 // const imagga = require('./apis/imagga');
 // const mailgun = require('./apis/mailgun');
 const cloudamp = require('./apis/ampq');
+const {publish} = require("./apis/ampq");
 
 // (async () => {
 //     const imageUrl = 'https://wallpapercave.com/wp/wp3503654.jpg';
@@ -18,4 +19,13 @@ const cloudamp = require('./apis/ampq');
 // })();
 //
 
-cloudamp();
+
+cloudamp.start();
+
+const delay = ms => new Promise(res => setTimeout(res, ms));
+(async () => {
+    for (let i = 0; i < 10; i++) {
+        await delay(1000);
+        cloudamp.publish(i.toString());
+    }
+})();
