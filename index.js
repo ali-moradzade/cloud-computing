@@ -1,7 +1,8 @@
 // const imagga = require('./apis/imagga');
 // const mailgun = require('./apis/mailgun');
-const cloudamp = require('./apis/ampq');
-const {publish} = require("./apis/ampq");
+// const cloudamp = require('./apis/ampq');
+// const {publish} = require("./apis/ampq");
+const db = require('./apis/db');
 
 // (async () => {
 //     const imageUrl = 'https://wallpapercave.com/wp/wp3503654.jpg';
@@ -20,12 +21,19 @@ const {publish} = require("./apis/ampq");
 //
 
 
-cloudamp.start();
+// cloudamp.start();
+//
+// const delay = ms => new Promise(res => setTimeout(res, ms));
+// (async () => {
+//     for (let i = 0; i < 10; i++) {
+//         await delay(1000);
+//         cloudamp.publish(i.toString());
+//     }
+// })();
 
-const delay = ms => new Promise(res => setTimeout(res, ms));
-(async () => {
-    for (let i = 0; i < 10; i++) {
-        await delay(1000);
-        cloudamp.publish(i.toString());
-    }
-})();
+db.connect()
+    .then(() => {
+        console.log('connected to db');
+        console.log('hello world');
+    });
+
