@@ -42,4 +42,4 @@ const uploadImageAndCreateURL = async (filePath, objectName) => {
     }
 };
 
-module.exports = uploadImageAndCreateURL;
+exports.uploadImageAndCreateURL = uploadImageAndCreateURL;

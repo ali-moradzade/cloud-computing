@@ -31,6 +31,7 @@ const AdvertisementSchema = new Schema({
     email: String,
     state: String,
     category: String,
+    imageUrl: String,
     createdAt: {
         type: Date,
         default: Date.now,
@@ -38,4 +39,4 @@ const AdvertisementSchema = new Schema({
 });
 
 const Advertisement = mongoose.model('advertisement', AdvertisementSchema);
-module.Advertisement = Advertisement;
+exports.Advertisement = Advertisement;

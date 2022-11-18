@@ -1,4 +1,5 @@
 const multiparty = require('multiparty');
+const advertisementService = require('../services/advertisement.service');
 
 module.exports = {
     createAd(req, res) {
@@ -12,10 +13,13 @@ module.exports = {
                 let description = fields.description[0];
                 let email = fields.email[0];
 
-                console.log(pathOfImage, description, email);
-
-                // TODO: save the image to the s3 bucket
-                res.send('File uploaded successfully');
+                advertisementService.createAdvertisement(pathOfImage, description, email)
+                    .then((id) => {
+                        res.send('Your advertisement submitted successfully with id: ' + id);
+                    })
+                    .catch((err) => {
+                        res.send('Problem with submitting your ad. Error: ' + err);
+                    });
             }
         });
     },
