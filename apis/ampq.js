@@ -25,6 +25,9 @@ function start() {
 
         console.log("[AMQP] connected");
         amqpConn = conn;
+
+        startPublisher();
+        startWorker();
     });
 }
 
@@ -130,7 +133,6 @@ function closeOnErr(err) {
 
 exports.start = start;
 
-exports.startPublisher = startPublisher;
 exports.startWorker = startWorker;
 
 exports.publish = publish;

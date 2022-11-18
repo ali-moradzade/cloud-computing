@@ -9,6 +9,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 db.connect();
+
 ampq.start();
 
 routes(app);
