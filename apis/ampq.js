@@ -115,7 +115,7 @@ function startWorker() {
 // TODO: move our work to here
 function work(msg, cb) {
     const postId = msg.content.toString();
-    console.log(postId);
+    console.log('Got the post with id: ' + postId);
 
     cb(true);
 }

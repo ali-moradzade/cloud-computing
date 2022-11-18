@@ -27,7 +27,12 @@ module.exports = {
     getAd(req, res) {
         const id = req.params.id;
 
-        // TODO: implement this
-        res.send('Get ad with id: ' + id);
+        advertisementService.getAdvertisement(id)
+            .then((advertisement) => {
+                res.send(advertisement);
+            })
+            .catch((err) => {
+                res.send('Problem with getting your ad. Error: ' + err);
+            });
     },
 };

@@ -29,5 +29,17 @@ module.exports = {
         ampq.publish(advertisement._id.toString());
 
         return advertisement._id.toString();
+    },
+
+    async getAdvertisement(id) {
+        const advertisement = await Advertisement.findOne({_id: id});
+        const state = advertisement.state;
+        if (state === 'approved') {
+            return advertisement;
+        } else if (state === 'pending') {
+            return 'Your advertisement is still pending';
+        } else {
+            return 'Your advertisement was rejected';
+        }
     }
 };
