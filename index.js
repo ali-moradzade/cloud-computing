@@ -35,5 +35,10 @@ db.connect()
     .then(() => {
         console.log('connected to db');
         console.log('hello world');
+
+        db.disconnect()
+            .then(() => {
+                console.log('disconnected from db');
+            });
     });
 

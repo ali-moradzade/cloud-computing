@@ -1,23 +1,20 @@
-const fs = require('fs');
 const multiparty = require('multiparty');
 
 module.exports = {
     createAd(req, res) {
         let form = new multiparty.Form();
+
         form.parse(req, (err, fields, files) => {
             if (err) {
                 console.log(err);
             } else {
-                let path = files.image[0].path;
-                fs.readFile(path, (err, data) => {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        // TODO: save the image to the s3 bucket
-                        console.log(data);
-                    }
-                });
+                let pathOfImage = files.image[0].path;
+                let description = fields.description[0];
+                let email = fields.email[0];
 
+                console.log(pathOfImage, description, email);
+
+                // TODO: save the image to the s3 bucket
                 res.send('File uploaded successfully');
             }
         });
