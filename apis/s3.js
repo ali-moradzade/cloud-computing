@@ -21,21 +21,25 @@ const uploadParams = {
 
 
 // call S3 to retrieve upload file to specified bucket
-const run = async (filePath, postId) => {
+const uploadImageAndCreateURL = async (filePath, objectName) => {
     const fileStream = fs.createReadStream(filePath);
     fileStream.on('error', function (err) {
         console.log('File Error', err);
     });
 
-    uploadParams.Key = postId;
+    uploadParams.Key = objectName;
     uploadParams.Body = fileStream;
 
     try {
         const data = await s3.send(new PutObjectCommand(uploadParams));
         console.log('Success', data);
+
+        let url = `https://${process.env.S3_BUCKET}.s3.ir-thr-at1.arvanstorage.com/${objectName}`;
+        return url;
     } catch (err) {
         console.log('Error', err);
+        return null;
     }
 };
 
-module.exports = run;
+module.exports = uploadImageAndCreateURL;
