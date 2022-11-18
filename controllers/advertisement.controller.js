@@ -1,5 +1,5 @@
 const multiparty = require('multiparty');
-const advertisementService = require('../services/advertisement.service');
+const advertisementService = require('../services/getAndCreateAd.service');
 
 module.exports = {
     createAd(req, res) {

@@ -1,5 +1,6 @@
 const amqp = require('amqplib/callback_api');
 require('dotenv').config();
+const processAd = require('../services/processAd.service');
 
 // if the connection is closed or fails to be established at all, we will reconnect
 let amqpConn = null;
@@ -24,15 +25,9 @@ function start() {
 
         console.log("[AMQP] connected");
         amqpConn = conn;
-
-        whenConnected();
     });
 }
 
-function whenConnected() {
-    startPublisher();
-    startWorker();
-}
 
 let pubChannel = null;
 let offlinePubQueue = [];
@@ -112,12 +107,18 @@ function startWorker() {
     });
 }
 
-// TODO: move our work to here
 function work(msg, cb) {
     const postId = msg.content.toString();
-    console.log('Got the post with id: ' + postId);
 
-    cb(true);
+    // Process the received message
+    processAd(postId)
+        .then(() => {
+            cb(true);
+        })
+        .catch((err) => {
+            console.log(err);
+            cb(false);
+        });
 }
 
 function closeOnErr(err) {
@@ -128,4 +129,8 @@ function closeOnErr(err) {
 }
 
 exports.start = start;
+
+exports.startPublisher = startPublisher;
+exports.startWorker = startWorker;
+
 exports.publish = publish;

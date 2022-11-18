@@ -1,5 +1,6 @@
 const {S3Client, PutObjectCommand} = require('@aws-sdk/client-s3');
 const fs = require('fs');
+const path = require('path');
 require('dotenv').config();
 
 // Create an S3 client service object
@@ -19,27 +20,34 @@ const uploadParams = {
     Body: 'BODY',
 };
 
+const getImageNameFromPostId = (postId, pathOfImage) => {
+    return postId + path.extname(pathOfImage);
+};
 
 // call S3 to retrieve upload file to specified bucket
-const uploadImageAndCreateURL = async (filePath, objectName) => {
+const uploadImage = async (filePath, postId) => {
+    const imageName = getImageNameFromPostId(postId, filePath);
     const fileStream = fs.createReadStream(filePath);
     fileStream.on('error', function (err) {
         console.log('File Error', err);
     });
 
-    uploadParams.Key = objectName;
+    uploadParams.Key = imageName;
     uploadParams.Body = fileStream;
 
     try {
         const data = await s3.send(new PutObjectCommand(uploadParams));
         console.log('Success', data);
-
-        let url = `https://${process.env.S3_BUCKET}.s3.ir-thr-at1.arvanstorage.com/${objectName}`;
-        return url;
     } catch (err) {
         console.log('Error', err);
-        return null;
     }
 };
 
-exports.uploadImageAndCreateURL = uploadImageAndCreateURL;
+const getUrlFromPostId = (postId) => {
+    const objectName = getImageNameFromPostId(postId);
+    return `https://${process.env.S3_BUCKET}.s3.ir-thr-at1.arvanstorage.com/${objectName}`;
+};
+
+exports.getImageNameFromPostId = getImageNameFromPostId;
+exports.uploadImage = uploadImage;
+exports.getUrlFromPostId = getUrlFromPostId;

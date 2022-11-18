@@ -1,6 +1,5 @@
 const db = require('../apis/db');
 const s3 = require('../apis/s3');
-const path = require('path');
 const ampq = require('../apis/ampq');
 
 const Advertisement = db.Advertisement;
@@ -15,20 +14,21 @@ module.exports = {
             imageUrl: '',
         });
 
+        const postId = advertisement._id.toString();
+
         // save the advertisement to the database
         await advertisement.save();
 
         // upload the image to the s3 bucket
-        const imageName = advertisement._id.toString() + path.extname(pathOfImage);
-        const imageUrl = await s3.uploadImageAndCreateURL(pathOfImage, imageName);
+        await s3.uploadImage(pathOfImage, postId);
 
         // change the imageUrl of the advertisement
-        await Advertisement.updateOne({_id: advertisement._id.toString()}, {imageUrl: imageUrl});
+        await Advertisement.updateOne({_id: postId}, {imageUrl: s3.getUrlFromPostId(postId)});
 
         // send the advertisement to the queue
-        ampq.publish(advertisement._id.toString());
+        ampq.publish(postId);
 
-        return advertisement._id.toString();
+        return postId;
     },
 
     async getAdvertisement(id) {
