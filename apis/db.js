@@ -9,14 +9,14 @@ exports.connect = () => {
         useNewUrlParser: true,
         authSource: 'admin'
     })
-        .then(() => console.log('Connected to MongoDB...'))
-        .catch(err => console.error('Could not connect to MongoDB...', err));
+        .then(() => console.log('Connected to Liara MongoDB ..'))
+        .catch(err => console.error('Could not connect to MongoDB!', err));
 };
 
 exports.disconnect = () => {
     mongoose.disconnect()
-        .then(() => console.log('Disconnected from MongoDB...'))
-        .catch(err => console.error('Could not disconnect from MongoDB...', err));
+        .then(() => console.log('Disconnected from MongoDB'))
+        .catch(err => console.error('Could not disconnect from MongoDB!', err));
 };
 
 const AdvertisementSchema = new Schema({

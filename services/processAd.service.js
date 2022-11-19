@@ -5,7 +5,8 @@ const mailgun = require('../apis/mailgun');
 const Advertisement = db.Advertisement;
 
 module.exports = async (postId) => {
-    console.log(`Received message: ${postId}, processing ..\n`);
+    console.log('\n[2] --> Second Backend: Process Advertisement\n');
+    console.log(`Received advertisement with id: ${postId}, processing ..`);
 
     // Get the URL of the image from database
     let url;
@@ -13,7 +14,7 @@ module.exports = async (postId) => {
         console.log(`Getting image URL from database ..`);
         const ad = await Advertisement.findById(postId);
         url = ad.imageUrl;
-        console.log(`Got image URL: ${url}\n`);
+        console.log(`\timageUrl: ${url}`);
     } catch (err) {
         console.log(`Error getting image URL from database: ${err}`);
         return;
@@ -26,9 +27,7 @@ module.exports = async (postId) => {
 
     try {
         const response = await imagga(url);
-        console.log('Got response from tagging system:');
-        console.log(response);
-        console.log();
+        console.log('\t', response);
 
         state = response.state;
         category = response.category;
@@ -41,7 +40,7 @@ module.exports = async (postId) => {
     try {
         console.log('Saving results in the database ..');
         await Advertisement.updateOne({_id: postId}, {state, category});
-        console.log('Results saved successfully in the database ..\n');
+        console.log('\tResults saved successfully in the database ..');
     } catch (err) {
         console.log('Error saving results in the database: ' + err);
         return;
@@ -53,7 +52,7 @@ module.exports = async (postId) => {
         console.log('Getting email of the user from the database ..');
         const ad = await Advertisement.findOne({_id: postId});
         email = ad.email;
-        console.log(`Got email: ${email}\n`);
+        console.log(`\temail: ${email}\n`);
     } catch (err) {
         console.log('Error getting email of the user from the database: ' + err);
         return;
@@ -72,7 +71,7 @@ module.exports = async (postId) => {
     try {
         console.log('Sending email to user ..');
         await mailgun(email, subject, text);
-        console.log('email sent successfully\n');
+        console.log('\temail sent successfully');
     } catch (err) {
         console.log('Error sending email to user: ' + err);
     }

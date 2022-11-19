@@ -20,7 +20,7 @@ module.exports = {
                     email
                 });
 
-                console.log('\nCalling the service to create the advertisement ..\n');
+                console.log('\n[1] --> First Backend: Create Advertisement\n');
                 let postId = await advertisementService.createAdvertisement(pathOfImage, description, email);
 
                 if (postId) {

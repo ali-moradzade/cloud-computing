@@ -6,6 +6,8 @@ const Advertisement = db.Advertisement;
 
 module.exports = {
     async createAdvertisement(pathOfImage, description, email) {
+        console.log('\n[1] --> First Backend: Create Advertisement\n');
+
         const advertisement = new Advertisement({
             description,
             email,
@@ -27,19 +29,19 @@ module.exports = {
         try {
             // upload the image to the s3 bucket
             await s3.uploadImage(pathOfImage, postId);
-            console.log('\nImage uploaded successfully to the s3 bucket ..');
+            console.log('Image uploaded successfully to the s3 bucket ..');
         } catch (err) {
             console.log('Error in uploading the image to the s3 bucket: ' + err);
             return null;
         }
 
         let imageUrl = s3.getUrlFromPostId(postId, pathOfImage);
-        console.log('imageUrl: ' + imageUrl + '\n');
+        console.log('\timageUrl: ' + imageUrl + '\n');
 
         try {
             // change the imageUrl of the advertisement
             await Advertisement.updateOne({_id: postId}, {imageUrl: imageUrl});
-            console.log('ImageUrl of the advertisement updated successfully .. \n');
+            console.log('ImageUrl of the advertisement updated successfully ..');
         } catch (err) {
             console.log('Error in updating the imageUrl of the advertisement: ' + err);
             return null;
@@ -47,8 +49,8 @@ module.exports = {
 
         try {
             // send the postId to the ampq queue
-            ampq.publish(postId);
-            console.log(`Advertisement published to the queue successfully .. \n`);
+            await ampq.publish(postId);
+            console.log(`Advertisement published to the queue successfully ..`);
         } catch (err) {
             console.log('Error in sending the advertisement to the queue: ' + err);
             return null;
