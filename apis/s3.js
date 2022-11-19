@@ -20,9 +20,9 @@ const uploadParams = {
     Body: 'BODY',
 };
 
-const getImageNameFromPostId = (postId, pathOfImage) => {
+function getImageNameFromPostId(postId, pathOfImage) {
     return postId + path.extname(pathOfImage);
-};
+}
 
 // call S3 to retrieve upload file to specified bucket
 const uploadImage = async (filePath, postId) => {
@@ -43,8 +43,8 @@ const uploadImage = async (filePath, postId) => {
     }
 };
 
-const getUrlFromPostId = (postId) => {
-    const objectName = getImageNameFromPostId(postId);
+const getUrlFromPostId = (postId, pathOfImage) => {
+    const objectName = getImageNameFromPostId(postId, pathOfImage);
     return `https://${process.env.S3_BUCKET}.s3.ir-thr-at1.arvanstorage.com/${objectName}`;
 };
 

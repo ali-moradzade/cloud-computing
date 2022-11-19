@@ -1,6 +1,5 @@
 const amqp = require('amqplib/callback_api');
-require('dotenv').config();
-const processAd = require('../services/processAd.service');
+const processAdService = require('../services/processAd.service');
 
 // if the connection is closed or fails to be established at all, we will reconnect
 let amqpConn = null;
@@ -17,7 +16,6 @@ function start() {
                 console.error("[AMQP] conn error", err.message);
             }
         });
-
         conn.on("close", function () {
             console.error("[AMQP] reconnecting");
             return setTimeout(start, 1000);
@@ -25,12 +23,14 @@ function start() {
 
         console.log("[AMQP] connected");
         amqpConn = conn;
-
-        startPublisher();
-        startWorker();
+        whenConnected();
     });
 }
 
+function whenConnected() {
+    startPublisher();
+    startWorker();
+}
 
 let pubChannel = null;
 let offlinePubQueue = [];
@@ -39,7 +39,6 @@ function startPublisher() {
     amqpConn.createConfirmChannel(function (err, ch) {
         if (closeOnErr(err))
             return;
-
         ch.on("error", function (err) {
             console.error("[AMQP] channel error", err.message);
         });
@@ -52,28 +51,23 @@ function startPublisher() {
             let m = offlinePubQueue.shift();
             if (!m)
                 break;
-            publish(m[2].toString());
+            publish(m[0], m[1], m[2]);
         }
     });
 }
 
-function publish(postId) {
-    let postIdBuffer = Buffer.from(postId);
-    let exchange = "";
-    let routingKey = "jobs";
-
+function publish(exchange, routingKey, content) {
     try {
-        pubChannel.publish(exchange, routingKey, postIdBuffer, {persistent: true},
-            function (err) {
-                if (err) {
-                    console.error("[AMQP] publish", err);
-                    offlinePubQueue.push([exchange, routingKey, postIdBuffer]);
-                    pubChannel.connection.close();
-                }
-            });
+        pubChannel.publish(exchange, routingKey, content, {persistent: true}, function (err, ok) {
+            if (err) {
+                console.error("[AMQP] publish", err);
+                offlinePubQueue.push([exchange, routingKey, content]);
+                pubChannel.connection.close();
+            }
+        });
     } catch (e) {
         console.error("[AMQP] publish", e.message);
-        offlinePubQueue.push([exchange, routingKey, postIdBuffer]);
+        offlinePubQueue.push([exchange, routingKey, content]);
     }
 }
 
@@ -85,9 +79,11 @@ function startWorker() {
         ch.on("error", function (err) {
             console.error("[AMQP] channel error", err.message);
         });
+
         ch.on("close", function () {
             console.log("[AMQP] channel closed");
         });
+
         ch.prefetch(10);
         ch.assertQueue("jobs", {durable: true}, function (err, _ok) {
             if (closeOnErr(err)) return;
@@ -98,10 +94,7 @@ function startWorker() {
         function processMsg(msg) {
             work(msg, function (ok) {
                 try {
-                    if (ok)
-                        ch.ack(msg);
-                    else
-                        ch.reject(msg, true);
+                    if (ok) ch.ack(msg); else ch.reject(msg, true);
                 } catch (e) {
                     closeOnErr(e);
                 }
@@ -111,17 +104,18 @@ function startWorker() {
 }
 
 function work(msg, cb) {
-    const postId = msg.content.toString();
+    let postId = msg.content.toString();
+    console.log("Processed ad with id: " + postId);
 
-    // Process the received message
-    processAd(postId)
-        .then(() => {
-            cb(true);
-        })
-        .catch((err) => {
-            console.log(err);
-            cb(false);
-        });
+    // processAdService(postId)
+    //     .then(() => {
+    //         console.log('Finished processing the msg');
+    //     })
+    //     .catch(() => {
+    //         console.log('Error processing the msg');
+    //     });
+
+    cb(true);
 }
 
 function closeOnErr(err) {
@@ -131,8 +125,9 @@ function closeOnErr(err) {
     return true;
 }
 
+function customPublish(postId) {
+    publish("", "jobs", new Buffer.from(postId));
+}
+
 exports.start = start;
-
-exports.startWorker = startWorker;
-
-exports.publish = publish;
+exports.publish = customPublish;

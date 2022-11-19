@@ -5,7 +5,7 @@ module.exports = {
     createAd(req, res) {
         let form = new multiparty.Form();
 
-        form.parse(req, (err, fields, files) => {
+        form.parse(req, async (err, fields, files) => {
             if (err) {
                 console.log(err);
             } else {
@@ -13,13 +13,17 @@ module.exports = {
                 let description = fields.description[0];
                 let email = fields.email[0];
 
-                advertisementService.createAdvertisement(pathOfImage, description, email)
-                    .then((id) => {
-                        res.send('Your advertisement submitted successfully with id: ' + id);
-                    })
-                    .catch((err) => {
-                        res.send('Problem with submitting your ad. Error: ' + err);
-                    });
+                console.log('Form Data:');
+                console.log({
+                    pathOfImage,
+                    description,
+                    email
+                });
+
+                console.log('\nCalling the service to create the advertisement ..\n');
+                let postId = await advertisementService.createAdvertisement(pathOfImage, description, email);
+                console.log('postId: ' + postId);
+                res.send(postId);
             }
         });
     },
