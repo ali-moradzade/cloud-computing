@@ -4,12 +4,12 @@ const cloudamp = require('./apis/ampq');
 const db = require('./apis/db');
 
 // Working correctly
-(async () => {
-    const imageUrl = 'https://wallpapercave.com/wp/wp3503654.jpg';
-    const result = await imagga(imageUrl);
-
-    console.log(result);
-})();
+// (async () => {
+//     const imageUrl = 'https://wallpapercave.com/wp/wp3503654.jpg';
+//     const result = await imagga(imageUrl);
+//
+//     console.log(result);
+// })();
 // output: { state: 'approved', category: 'school bus' }
 
 // (async () => {
@@ -25,10 +25,12 @@ const db = require('./apis/db');
 //         message: 'Queued. Thank you.'
 // }
 
-// cloudamp.start();
-// cloudamp.publish('1');
-// cloudamp.publish('2');
-// cloudamp.publish('3');
+(async () => {
+    await cloudamp.start();
+    await cloudamp.publish('1');
+    await cloudamp.publish('2');
+    await cloudamp.publish('3');
+})();
 
 // Working correctly
 // db.connect();

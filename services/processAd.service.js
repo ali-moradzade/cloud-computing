@@ -26,7 +26,9 @@ module.exports = async (postId) => {
 
     try {
         const response = await imagga(url);
-        console.log('got: ' + JSON.stringify(response) + '\n');
+        console.log('Got response from tagging system:');
+        console.log(response);
+        console.log();
 
         state = response.state;
         category = response.category;
@@ -39,17 +41,21 @@ module.exports = async (postId) => {
     try {
         console.log('Saving results in the database ..');
         await Advertisement.updateOne({_id: postId}, {state, category});
+        console.log('Results saved successfully in the database ..\n');
     } catch (err) {
         console.log('Error saving results in the database: ' + err);
         return;
     }
 
-    // TODO: remove this after debugging
+    // Get the email of the user from the database
+    let email;
     try {
-        const post = await Advertisement.findOne({_id: postId});
-        console.log('Got: ' + JSON.stringify(post) + '\n');
+        console.log('Getting email of the user from the database ..');
+        const ad = await Advertisement.findOne({_id: postId});
+        email = ad.email;
+        console.log(`Got email: ${email}\n`);
     } catch (err) {
-        console.log('Error getting post from the database: ' + err);
+        console.log('Error getting email of the user from the database: ' + err);
         return;
     }
 
@@ -61,15 +67,13 @@ module.exports = async (postId) => {
         subject = 'Your advertisement has been rejected';
     }
 
-    const email = post.email;
     const text = `Your advertisement has been processed. The category is ${category} and the state is ${state}.`;
 
     try {
-        console.log('sending email to user ..');
+        console.log('Sending email to user ..');
         await mailgun(email, subject, text);
         console.log('email sent successfully\n');
     } catch (err) {
         console.log('Error sending email to user: ' + err);
-        return;
     }
 };
