@@ -20,7 +20,6 @@ module.exports = {
             await advertisement.save();
             console.log('Advertisement saved successfully to the database ..');
             console.log(advertisement);
-            console.log();
         } catch (err) {
             console.log('Error in saving the advertisement to the database: ' + err);
             return null;
@@ -28,7 +27,7 @@ module.exports = {
         try {
             // upload the image to the s3 bucket
             await s3.uploadImage(pathOfImage, postId);
-            console.log('Image uploaded successfully to the s3 bucket ..');
+            console.log('\nImage uploaded successfully to the s3 bucket ..');
         } catch (err) {
             console.log('Error in uploading the image to the s3 bucket: ' + err);
             return null;
@@ -48,8 +47,8 @@ module.exports = {
 
         try {
             // send the postId to the ampq queue
-            ampq.publish(postId.toString());
-            console.log(`Advertisement published to the queue with postId: ${postId} successfully .. \n`);
+            ampq.publish(postId);
+            console.log(`Advertisement published to the queue successfully .. \n`);
         } catch (err) {
             console.log('Error in sending the advertisement to the queue: ' + err);
             return null;

@@ -105,7 +105,7 @@ function startWorker() {
 
 function work(msg, cb) {
     let postId = msg.content.toString();
-    console.log("Processed ad with id: " + postId);
+    console.log("Processing ad with id: " + postId);
 
     // processAdService(postId)
     //     .then(() => {

@@ -22,8 +22,12 @@ module.exports = {
 
                 console.log('\nCalling the service to create the advertisement ..\n');
                 let postId = await advertisementService.createAdvertisement(pathOfImage, description, email);
-                console.log('postId: ' + postId);
-                res.send(postId);
+
+                if (postId) {
+                    res.send("Advertisement created successfully with postId: " + postId);
+                } else {
+                    res.send("Error in creating the advertisement ..");
+                }
             }
         });
     },
