@@ -17,7 +17,7 @@ module.exports = async (postId) => {
         console.log(`\timageUrl: ${url}`);
     } catch (err) {
         console.log(`Error getting image URL from database: ${err}`);
-        return;
+        return false;
     }
 
     // Send the image to tagging system
@@ -27,13 +27,13 @@ module.exports = async (postId) => {
 
     try {
         const response = await imagga(url);
-        console.log('\t', response);
+        console.log(response);
 
         state = response.state;
         category = response.category;
     } catch (err) {
         console.log('Error sending image to tagging system: ' + err);
-        return;
+        return false;
     }
 
     // Save the results in the database
@@ -43,7 +43,7 @@ module.exports = async (postId) => {
         console.log('\tResults saved successfully in the database ..');
     } catch (err) {
         console.log('Error saving results in the database: ' + err);
-        return;
+        return false;
     }
 
     // Get the email of the user from the database
@@ -55,7 +55,7 @@ module.exports = async (postId) => {
         console.log(`\temail: ${email}\n`);
     } catch (err) {
         console.log('Error getting email of the user from the database: ' + err);
-        return;
+        return false;
     }
 
     // Email the user
@@ -66,13 +66,18 @@ module.exports = async (postId) => {
         subject = 'Your advertisement has been rejected';
     }
 
-    const text = `Your advertisement has been processed. The category is ${category} and the state is ${state}.`;
+    let text = 'Your advertisement has been processed.\n';
+    text += `The category is "${category}" and the state is "${state}".\n`;
+    text += 'Link of your advertisement image: ' + url;
 
     try {
         console.log('Sending email to user ..');
-        await mailgun(email, subject, text);
+        await mailgun(email, subject, text, url);
         console.log('\temail sent successfully');
     } catch (err) {
         console.log('Error sending email to user: ' + err);
+        return false;
     }
+
+    return true;
 };

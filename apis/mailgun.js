@@ -1,24 +1,17 @@
-const mailgun = require("mailgun-js");
 require('dotenv').config();
 
-const DOMAIN = process.env.MAILGUN_DOMAIN;
-const API_KEY = process.env.MAILGUN_API_KEY;
+const apiKey = process.env.MAILGUN_API_KEY;
+const domain = process.env.MAILGUN_DOMAIN;
 
-const mg = mailgun({apiKey: API_KEY, domain: DOMAIN});
+const mailgun = require("mailgun-js")({apiKey, domain});
 
-module.exports = async (email, subject, text) => {
+module.exports = async (email, subject, text, imageUrl) => {
     const data = {
-        from: `<mailgun@${DOMAIN}>`,
+        from: `<mailgun@${domain}>`,
         to: email,
         subject: subject,
-        text: text
+        text: text,
     };
 
-    mg.messages().send(data, (error, body) => {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log(body);
-        }
-    });
+    await mailgun.messages().send(data);
 };
