@@ -23,9 +23,10 @@
     "body-parser": "^1.20.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "got": "^11.8.3",
     "mailgun-js": "^0.22.0",
     "mongoose": "^6.7.2",
-    "multiparty": "^4.2.3"
+    "multiparty": "^4.2.3",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6"
   }
 }

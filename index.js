@@ -4,12 +4,12 @@ const cloudamp = require('./apis/ampq');
 const db = require('./apis/db');
 
 // Working correctly
-// (async () => {
-//     const imageUrl = 'https://wallpapercave.com/wp/wp3503654.jpg';
-//     const result = await imagga(imageUrl);
-//
-//     console.log(result);
-// })();
+(async () => {
+    const imageUrl = 'https://wallpapercave.com/wp/wp3503654.jpg';
+    const result = await imagga(imageUrl);
+
+    console.log(result);
+})();
 // output: { state: 'approved', category: 'school bus' }
 
 // (async () => {

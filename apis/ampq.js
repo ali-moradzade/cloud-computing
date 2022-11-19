@@ -105,17 +105,15 @@ function startWorker() {
 
 function work(msg, cb) {
     let postId = msg.content.toString();
-    console.log("Processing ad with id: " + postId);
-
-    // processAdService(postId)
-    //     .then(() => {
-    //         console.log('Finished processing the msg');
-    //     })
-    //     .catch(() => {
-    //         console.log('Error processing the msg');
-    //     });
-
-    cb(true);
+    processAdService(postId)
+        .then(() => {
+            console.log("Ad with id: " + postId + " processed");
+            cb(true);
+        })
+        .catch(err => {
+            console.log("Error processing ad with id: " + postId);
+            cb(false);
+        });
 }
 
 function closeOnErr(err) {
