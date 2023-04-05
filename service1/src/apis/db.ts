@@ -31,7 +31,7 @@ const UploadSchema = new Schema({
     },
     inputs: String,
     language: String,
-    fileContents: String,
+    filePath: String,
     enable: {
         type: Boolean,
         default: true,
