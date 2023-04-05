@@ -4,21 +4,35 @@ import {Form} from "multiparty";
 const router = Router();
 
 router.post('/upload', (req: Request, res: Response) => {
-    // TODO
     let form = new Form();
 
-    form.parse(req, async (err, fields: { inputs: string }, files) => {
+    form.parse(req, async (err,
+                           fields: {
+                               email: string[];
+                               inputs: string[];
+                               language: string[]
+                           },
+                           files: {
+                               file: {
+                                   fieldName: string;
+                                   originalFilename: string;
+                                   path: string;
+                                   headers: any[];
+                                   size: number;
+                               }[]
+                           }
+    ) => {
         if (err) {
             console.log(err);
         } else {
-            let pathOfFile = files.file[0].path;
-            let description = fields.inputs[0];
 
-            console.log('Form Data:');
-            console.log({
-                pathOfFile,
-                description
-            });
+            console.log(fields)
+            console.log(files)
+            const path = files.file[0].path;
+            const email = fields.email[0];
+            const inputs = fields.inputs[0];
+            const language = fields.language[0];
+
 
 
             res.send('successfully uploaded');
