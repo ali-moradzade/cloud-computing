@@ -1,4 +1,4 @@
-import {Schema, connect, disconnect, model} from 'mongoose';
+import {connect, disconnect, model, Schema} from 'mongoose';
 import * as dotenv from "dotenv";
 
 dotenv.config();

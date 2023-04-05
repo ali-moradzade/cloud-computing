@@ -1,6 +1,7 @@
 import {Request, Response, Router} from 'express';
 import {Form} from "multiparty";
 import {saveUpload} from "../services/upload.service";
+import {createJobService} from "../services/createJob.service";
 import {getUrlFromId} from "../apis/s3";
 
 const router = Router();
@@ -32,9 +33,10 @@ router.post('/upload', async (req: Request, res: Response) => {
             const inputs = fields.inputs[0];
             const language = fields.language[0];
 
-            const id = await saveUpload(path, email, inputs, language);
+            const uploadId = await saveUpload(path, email, inputs, language);
+            await createJobService(uploadId);
 
-            res.send(`successfully uploaded. url: ${getUrlFromId(id, path)}`);
+            res.send(`successfully uploaded. url: ${getUrlFromId(uploadId, path)}`);
         }
     });
 });
