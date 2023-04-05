@@ -1,5 +1,5 @@
 import {connectToDb, disconnectFromDb, Upload} from "../apis/db";
-import {getUrlFromId, uploadImage} from "../apis/s3";
+import {uploadImage} from "../apis/s3";
 
 /**
  * @param path - path of the file
@@ -36,5 +36,6 @@ export async function saveUpload(
      * Save file to s3
      */
     await uploadImage(path, upload._id.toString());
-    return getUrlFromId(upload._id.toString(), path);
+
+    return upload._id.toString();
 }
