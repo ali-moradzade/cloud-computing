@@ -3,6 +3,7 @@ import {Form} from "multiparty";
 import {saveUpload} from "../services/upload.service";
 import {createJob} from "../services/createJob.service";
 import {getUrlFromId} from "../apis/s3";
+import {Upload} from "../apis/db";
 
 const router = Router();
 
@@ -39,6 +40,29 @@ router.post('/upload', async (req: Request, res: Response) => {
             res.send(`successfully uploaded. url: ${getUrlFromId(uploadId, path)}`);
         }
     });
+});
+
+router.post('/execute', async (req: Request, res: Response) => {
+    const {id} = req.body;
+
+    // Get this upload from db
+    const upload = await Upload.findById(id);
+
+    // Check enable
+    if (upload) {
+        if (!upload.enable) {
+            res.send('This upload is disabled');
+            return;
+        } else {
+            // Create job
+            await createJob(id);
+
+            res.send('Job created');
+        }
+    } else {
+        res.send('Upload not found');
+    }
+
 });
 
 export {router};
