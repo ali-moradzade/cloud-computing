@@ -1,5 +1,5 @@
 import {connectToDb, disconnectFromDb, Upload} from "../apis/db";
-import {uploadImage} from "../apis/s3";
+import {getUrlFromId, uploadImage} from "../apis/s3";
 
 /**
  * @param path - path of the file
@@ -7,7 +7,7 @@ import {uploadImage} from "../apis/s3";
  * @param inputs - inputs of the file
  * @param language - language of the file
  *
- * @returns {Promise<void>}
+ * @returns {Promise<string>}
  *
  * Saves the file to s3 and saves the info in the database
  */
@@ -36,4 +36,5 @@ export async function saveUpload(
      * Save file to s3
      */
     await uploadImage(path, upload._id.toString());
+    return getUrlFromId(upload._id.toString(), path);
 }

@@ -31,9 +31,9 @@ router.post('/upload', async (req: Request, res: Response) => {
             const inputs = fields.inputs[0];
             const language = fields.language[0];
 
-            await saveUpload(path, email, inputs, language);
+            const url = await saveUpload(path, email, inputs, language);
 
-            res.send('successfully uploaded');
+            res.send(`successfully uploaded. url: ${url}`);
         }
     });
 });
