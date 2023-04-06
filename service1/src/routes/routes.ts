@@ -45,24 +45,8 @@ router.post('/upload', async (req: Request, res: Response) => {
 router.post('/execute', async (req: Request, res: Response) => {
     const {id: uploadId} = req.body;
 
-    // Get this upload from db
-    const upload = await Upload.findById(uploadId);
-
-    // Check upload found
-    if (upload) {
-        // Check upload is enabled
-        if (!upload.enable) {
-            res.send('This upload is disabled');
-            return;
-        } else {
-            // Create job
-            await createJob(uploadId);
-
-            res.send(`Job created. Upload ID: ${uploadId}`);
-        }
-    } else {
-        res.send('Upload not found');
-    }
+    const result = await createJob(uploadId);
+    res.send(result);
 });
 
 export {router};
