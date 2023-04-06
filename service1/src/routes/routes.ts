@@ -50,7 +50,7 @@ router.post('/execute', async (req: Request, res: Response) => {
 });
 
 router.post('/status', async (req: Request, res: Response) => {
-    // TODO: implement
+    const {email} = req.body;
     res.send('Not implemented yet')
 });
 
