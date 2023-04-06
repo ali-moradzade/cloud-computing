@@ -3,7 +3,7 @@ import {Form} from "multiparty";
 import {saveUpload} from "../services/upload.service";
 import {createJob} from "../services/createJob.service";
 import {getUrlFromId} from "../apis/s3";
-import {Upload} from "../apis/db";
+import {status} from "../services/status.service";
 
 const router = Router();
 
@@ -51,7 +51,8 @@ router.post('/execute', async (req: Request, res: Response) => {
 
 router.post('/status', async (req: Request, res: Response) => {
     const {email} = req.body;
-    res.send('Not implemented yet')
+
+    return res.send(await status(email));
 });
 
 export {router};
