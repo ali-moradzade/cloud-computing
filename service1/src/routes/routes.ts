@@ -37,32 +37,32 @@ router.post('/upload', async (req: Request, res: Response) => {
             const uploadId = await saveUpload(path, email, inputs, language);
             await createJob(uploadId);
 
-            res.send(`successfully uploaded. url: ${getUrlFromId(uploadId, path)}`);
+            res.send(`Successfully uploaded. URL: ${getUrlFromId(uploadId, path)}, Upload ID: ${uploadId}`);
         }
     });
 });
 
 router.post('/execute', async (req: Request, res: Response) => {
-    const {id} = req.body;
+    const {id: uploadId} = req.body;
 
     // Get this upload from db
-    const upload = await Upload.findById(id);
+    const upload = await Upload.findById(uploadId);
 
-    // Check enable
+    // Check upload found
     if (upload) {
+        // Check upload is enabled
         if (!upload.enable) {
             res.send('This upload is disabled');
             return;
         } else {
             // Create job
-            await createJob(id);
+            await createJob(uploadId);
 
-            res.send(`Job created. Executed file: ${getUrlFromId(id, upload.filePath)}`);
+            res.send(`Job created. Executed file url: ${getUrlFromId(uploadId, upload.filePath)}, Upload ID: ${uploadId}`);
         }
     } else {
         res.send('Upload not found');
     }
-
 });
 
 export {router};

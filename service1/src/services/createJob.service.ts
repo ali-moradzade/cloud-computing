@@ -1,5 +1,5 @@
 import {publish} from "../apis/ampq";
 
-export async function createJob(id: string) {
-    await publish(id);
+export async function createJob(uploadId: string) {
+    await publish(uploadId);
 }

@@ -27,12 +27,12 @@ const uploadParams: {
     Body: createReadStream(''), // the file stream
 };
 
-export function getFileNameFromId(id: string, path: string) {
-    return id + extname(path);
+function getFileNameFromId(uploadId: string, path: string) {
+    return uploadId + extname(path);
 }
 
-export function getUrlFromId(id: string, path: string) {
-    const objectName = getFileNameFromId(id, path);
+export function getUrlFromId(uploadId: string, path: string) {
+    const objectName = getFileNameFromId(uploadId, path);
     return `https://${process.env.S3_BUCKET}.s3.ir-thr-at1.arvanstorage.com/${objectName}`;
 }
 

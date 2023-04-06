@@ -7,9 +7,7 @@ import {uploadImage} from "../apis/s3";
  * @param inputs - inputs of the file
  * @param language - language of the file
  *
- * @returns {Promise<string>}
- *
- * Saves the file to s3 and saves the info in the database
+ * @returns {Promise<string>} - saves the file to s3 and saves the info in the database, returns upload id, in db
  */
 export async function saveUpload(
     path: string,
