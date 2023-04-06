@@ -1,4 +1,5 @@
 import client from 'amqplib'
+import {createJob} from "../services/createJob.service";
 
 export async function start() {
     try {
@@ -13,8 +14,7 @@ export async function start() {
             if (msg !== null) {
                 let uploadId = msg.content.toString();
                 // TODO: change
-                // const result = await processAdService(postId);
-                const result = null;
+                const result = await createJob(uploadId);
                 if (result) {
                     console.log("Ad with id: " + uploadId + " processed");
                     ch1.ack(msg);
