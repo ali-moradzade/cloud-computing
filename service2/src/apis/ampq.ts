@@ -1,0 +1,32 @@
+import client from 'amqplib'
+
+export async function start() {
+    try {
+        const queue: string = process.env.QUEUE_NAME || 'queue';
+        const conn = await client.connect(process.env.CLOUDAMQP_URL || 'amqp://localhost');
+        console.log('Connected to RabbitMQ ..\n');
+
+        const ch1 = await conn.createChannel();
+        await ch1.assertQueue(queue);
+
+        await ch1.consume(queue, async (msg) => {
+            if (msg !== null) {
+                let uploadId = msg.content.toString();
+                // TODO: change
+                // const result = await processAdService(postId);
+                const result = null;
+                if (result) {
+                    console.log("Ad with id: " + uploadId + " processed");
+                    ch1.ack(msg);
+                } else {
+                    console.log("Error processing ad with id: " + uploadId);
+                    ch1.reject(msg, true);
+                }
+            } else {
+                console.log('Consumer cancelled by server');
+            }
+        });
+    } catch (e) {
+        console.log('Error connecting to RabbitMQ', e);
+    }
+}
