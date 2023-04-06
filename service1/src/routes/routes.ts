@@ -58,7 +58,7 @@ router.post('/execute', async (req: Request, res: Response) => {
             // Create job
             await createJob(uploadId);
 
-            res.send(`Job created. Executed file url: ${getUrlFromId(uploadId, upload.filePath)}, Upload ID: ${uploadId}`);
+            res.send(`Job created. Upload ID: ${uploadId}`);
         }
     } else {
         res.send('Upload not found');
