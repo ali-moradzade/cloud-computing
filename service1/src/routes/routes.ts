@@ -49,4 +49,9 @@ router.post('/execute', async (req: Request, res: Response) => {
     res.send(result);
 });
 
+router.post('/status', async (req: Request, res: Response) => {
+    // TODO: implement
+    res.send('Not implemented yet')
+});
+
 export {router};
