@@ -1,7 +1,7 @@
 import {Job, Result, Upload} from "../apis/db";
 import {getUrlFromId} from "../apis/s3";
 
-export async function status(email: string) {
+export async function statusService(email: string) {
     // Find all uploads matching the given email
     const uploads = await Upload.find({email}).select('_id');
 
@@ -22,7 +22,7 @@ export async function status(email: string) {
             output: result.output,
             status: result.status,
             executeDate: result.executeDate,
-            fileUrl: getUrlFromId(uploadIds[index].toString(), uploads[index].filePath)
+            fileUrl: getUrlFromId(uploadIds[index].toString(), uploads[index].filePath || '')
         }
     });
 }

@@ -3,7 +3,7 @@ import {Form} from "multiparty";
 import {saveUpload} from "../services/upload.service";
 import {createJob} from "../services/createJob.service";
 import {getUrlFromId} from "../apis/s3";
-import {status} from "../services/status.service";
+import {statusService} from "../services/status.service";
 
 const router = Router();
 
@@ -52,7 +52,7 @@ router.post('/execute', async (req: Request, res: Response) => {
 router.post('/status', async (req: Request, res: Response) => {
     const {email} = req.body;
 
-    return res.send(await status(email));
+    return res.send(await statusService(email));
 });
 
 export {router};
