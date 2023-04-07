@@ -1,7 +1,7 @@
 import {start} from "./apis/ampq";
+import {connectToDb} from "./apis/db";
 
-start().then(() => {
-    console.log('RabbitMQ started');
-}).catch((err) => {
-    console.error('Error starting RabbitMQ', err);
-});
+(async () => {
+    await connectToDb()
+    await start()
+})()

@@ -3,8 +3,6 @@ import {readFileSync} from "fs";
 import * as querystring from "querystring";
 
 export async function createJob(uploadId: string) {
-    await connectToDb();
-
     // Get the upload from the database
     const upload = await Upload.findById(uploadId);
 
@@ -30,8 +28,6 @@ export async function createJob(uploadId: string) {
     });
 
     await newJob.save();
-
-    await disconnectFromDb();
 
     return newJob;
 }
