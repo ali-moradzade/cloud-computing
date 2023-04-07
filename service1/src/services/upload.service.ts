@@ -26,11 +26,13 @@ export async function saveUpload(
     });
 
     await upload.save();
+    console.log(`Saved upload with id: ${upload._id.toString()}`)
 
     /**
      * Save file to s3
      */
     await uploadImage(path, upload._id.toString());
+    console.log(`Saved file to s3 with id: ${upload._id.toString()}`);
 
     return upload._id.toString();
 }

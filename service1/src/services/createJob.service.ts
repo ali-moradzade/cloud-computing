@@ -13,7 +13,6 @@ export async function createJob(uploadId: string) {
         } else {
             // Create job
             await publish(uploadId);
-            await createJob(uploadId);
 
             return `Job created. Upload ID: ${uploadId}`
         }
