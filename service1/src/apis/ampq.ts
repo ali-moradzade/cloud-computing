@@ -20,5 +20,7 @@ export async function publish(uploadId: string) {
 
     const ch2 = await conn.createChannel();
     await ch2.assertQueue(queue);
+
     ch2.sendToQueue(queue, Buffer.from(uploadId));
+    console.log(`[x] Sent ${uploadId} to ${queue} queue`);
 }
