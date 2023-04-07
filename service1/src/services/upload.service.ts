@@ -1,4 +1,4 @@
-import {connectToDb, disconnectFromDb, Upload} from "../apis/db";
+import {Upload} from "../apis/db";
 import {uploadImage} from "../apis/s3";
 
 /**
@@ -18,8 +18,6 @@ export async function saveUpload(
     /**
      * Store info in the database
      */
-    await connectToDb();
-
     const upload = new Upload({
         email,
         inputs,
@@ -28,7 +26,6 @@ export async function saveUpload(
     });
 
     await upload.save();
-    await disconnectFromDb();
 
     /**
      * Save file to s3
