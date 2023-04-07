@@ -56,12 +56,15 @@ export async function executeJob() {
 
         const email = upload.email;
 
-        if (hasError) {
-            await sendEmail(email, 'Error', output);
-            console.log('Error: ', output)
-        } else {
-            await sendEmail(email, 'Success', output);
-
-        }
+        console.log(`Email for job: ${job._id}`)
+        console.log({
+            email,
+            output,
+        })
+        // if (hasError) {
+        //     await sendEmail(email, 'Error', output);
+        // } else {
+        //     await sendEmail(email, 'Success', output);
+        // }
     }
 }
