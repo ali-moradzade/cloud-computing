@@ -19,12 +19,12 @@ const uploadParams: {
     Bucket: string;
     Key: string;
     ACL: string;
-    Body: ReadStream;
+    Body: ReadStream | undefined;
 } = {
     Bucket: process.env.S3_BUCKET || '', // bucket name
     Key: 'object-name', // the name of the selected file
     ACL: 'public-read', // 'private' | 'public-read'
-    Body: createReadStream(''), // the file stream
+    Body: undefined,
 };
 
 function getFileNameFromId(uploadId: string, path: string) {
