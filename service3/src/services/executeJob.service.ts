@@ -5,14 +5,17 @@ import {sendEmail} from "../apis/mailgun";
 export async function executeJob() {
     // Get jobs with status none
     const jobs = await Job.find({status: 'none'});
+    console.log('Jobs: ', jobs)
 
     // For each job, execute it with codex and update the status
     for (const job of jobs) {
+        console.log('Job: ', job)
         /**
          * Execute job with codex
          */
         const urlEncoded = job.job;
         const response = await executeCode(urlEncoded);
+        console.log('Response: ', response)
 
         /**
          * Update job status to executed
@@ -31,6 +34,8 @@ export async function executeJob() {
         } else {
             output = response.output;
         }
+
+        console.log('Output: ', output)
 
         const result = new Result({
             jobId: job._id,
@@ -53,8 +58,10 @@ export async function executeJob() {
 
         if (hasError) {
             await sendEmail(email, 'Error', output);
+            console.log('Error: ', output)
         } else {
             await sendEmail(email, 'Success', output);
+
         }
     }
 }
