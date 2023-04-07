@@ -1,4 +1,4 @@
-import {Upload, connectToDb, disconnectFromDb, Job} from "../apis/db";
+import {Upload, Job} from "../apis/db";
 import {readFileSync} from "fs";
 import * as querystring from "querystring";
 
@@ -12,7 +12,7 @@ export async function createJob(uploadId: string) {
     }
 
     const {inputs, language, filePath} = upload;
-    const content = readFileSync(filePath, 'utf8');
+    const content = readFileSync(filePath || '', 'utf8');
 
     // make a query string from: inputs, language, content
     const job = querystring.stringify({
@@ -28,6 +28,7 @@ export async function createJob(uploadId: string) {
     });
 
     await newJob.save();
+    console.log('Job created', newJob)
 
     return newJob;
 }

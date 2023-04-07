@@ -13,13 +13,13 @@ export async function start() {
         await ch1.consume(queue, async (msg) => {
             if (msg !== null) {
                 let uploadId = msg.content.toString();
-                // TODO: change
                 const result = await createJob(uploadId);
+
                 if (result) {
-                    console.log("Ad with id: " + uploadId + " processed");
+                    console.log(`Upload with id: ${uploadId} processed`);
                     ch1.ack(msg);
                 } else {
-                    console.log("Error processing ad with id: " + uploadId);
+                    console.log(`Error processing upload with id: ${uploadId}`);
                     ch1.reject(msg, true);
                 }
             } else {
