@@ -29,9 +29,14 @@ router.post('/upload', async (req: Request, res: Response) => {
         if (err) {
             console.log(err);
         } else {
+            console.log(fields);
             const path = files.file[0].path;
             const email = fields.email[0];
-            const inputs = fields.inputs[0];
+
+            let inputs = '';
+            if (fields.inputs) {
+                inputs = fields.inputs[0] || '';
+            }
             const language = fields.language[0];
 
             const uploadId = await saveUpload(path, email, inputs, language);
