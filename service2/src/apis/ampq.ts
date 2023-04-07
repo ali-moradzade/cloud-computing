@@ -14,6 +14,7 @@ export async function start() {
             if (msg !== null) {
                 let uploadId = msg.content.toString();
                 const result = await createJob(uploadId);
+                // const result = 'empty the queue'
 
                 if (result) {
                     console.log(`Upload with id: ${uploadId} processed`);
