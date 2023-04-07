@@ -22,5 +22,5 @@ export async function publish(uploadId: string) {
     await ch2.assertQueue(queue);
 
     ch2.sendToQueue(queue, Buffer.from(uploadId));
-    console.log(`[x] Sent ${uploadId} to ${queue} queue`);
+    console.log(`[x] Sent ${uploadId} to: '${queue}'`);
 }
