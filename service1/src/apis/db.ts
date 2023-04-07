@@ -6,7 +6,7 @@ dotenv.config();
 const dbUrl = process.env.DB_URL || '';
 
 export async function connectToDb() {
-    await connect(dbUrl, )
+    await connect(dbUrl)
 }
 
 /**
