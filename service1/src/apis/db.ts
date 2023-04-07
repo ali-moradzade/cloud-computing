@@ -1,4 +1,4 @@
-import {connect, disconnect, model, Schema} from 'mongoose';
+import {connect, model, Schema} from 'mongoose';
 import * as dotenv from "dotenv";
 
 dotenv.config();
@@ -6,21 +6,7 @@ dotenv.config();
 const dbUrl = process.env.DB_URL || '';
 
 export async function connectToDb() {
-    try {
-        await connect(dbUrl)
-        console.log('Connected to Liara MongoDB ..')
-    } catch (err) {
-        console.error('Could not connect to MongoDB!', err)
-    }
-}
-
-export async function disconnectFromDb() {
-    try {
-        await disconnect()
-        console.log('Disconnected from MongoDB')
-    } catch (err) {
-        console.error('Could not disconnect from MongoDB!', err)
-    }
+    await connect(dbUrl, )
 }
 
 /**
