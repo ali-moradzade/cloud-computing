@@ -1,0 +1,22 @@
+{
+  "name": "simpleweb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:build": "tsc",
+    "start:run": "node dest/index.js",
+    "start": "npm run start:build && npm run start:run"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^4.17.17",
+    "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.17",
+    "ts-node": "^10.9.1"
+  }
+}
