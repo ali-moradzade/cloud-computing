@@ -33,7 +33,9 @@ app.post('/', async (req: any, res: any) => {
         res.send(response);
     } else {
         const shortUrl = await shortenUrl(url);
-        await client.set(url, shortUrl);
+        await client.set(url, shortUrl, {
+            EX: parseInt(process.env.EXPIRATION_TIME || '3600')
+        });
 
         const response: UrlResponse = {
             longUrl: url,
