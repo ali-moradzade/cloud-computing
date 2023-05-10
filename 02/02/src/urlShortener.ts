@@ -16,7 +16,7 @@ export async function shortenUrl(url: string): Promise<string> {
             'Content-Type': 'application/json',
             'apikey': process.env.API_KEY || ''
         },
-        data : data
+        data: data
     };
 
     const result: {
