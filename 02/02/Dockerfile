@@ -2,7 +2,7 @@
 FROM node:alpine
 
 # Install redis
-RUN apk add --no-cache redis
+RUN apk add redis
 
 # Run redis server
 RUN redis-server &
