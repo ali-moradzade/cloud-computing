@@ -6,7 +6,9 @@
   "scripts": {
     "start:build": "tsc",
     "start:run": "node dest/index.js",
-    "start": "npm run start:build && npm run start:run"
+    "start": "npm run start:build && npm run start:run",
+    "docker:build": "docker build -t alimoradzade/my-node-redis-image .",
+    "docker:run": "docker run -p 3000:3000 -v .:/usr/app -v node_modules --link redis:redis alimoradzade/my-node-redis-image"
   },
   "keywords": [],
   "author": "",
