@@ -10,7 +10,6 @@ app.use(express.json());
 app.use(urlencoded({extended: true}));
 
 const port = process.env.PORT;
-const key = 'hello';
 
 interface UrlResponse {
     longUrl: string;
