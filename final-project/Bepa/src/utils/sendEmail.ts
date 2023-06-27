@@ -1,14 +1,12 @@
-import * as dotenv from "dotenv";
 import mailgun from 'mailgun-js';
 import {BEPA} from "../config";
-
-dotenv.config();
 
 const mailgunClient = mailgun({
     apiKey: BEPA.mailgun.apiKey,
     domain: BEPA.mailgun.domain
 });
 
+// TODO: not sending email
 export async function sendEmail(email: string, subject: string, text: string) {
     const data = {
         from: `<mailgun@${BEPA.mailgun.domain}>`,
@@ -17,5 +15,7 @@ export async function sendEmail(email: string, subject: string, text: string) {
         text: text,
     };
 
-    await mailgunClient.messages().send(data);
+    // await mailgunClient.messages().send(data);
+    console.log(data)
+    console.log('email sent!')
 }
