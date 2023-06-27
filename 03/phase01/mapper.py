@@ -1,9 +1,11 @@
+#!/usr/bin/python3
+
 import sys
 import csv
 
 
 def print_formatted(message, likes, retweet_count, web_app_source, iphone_source, android_source):
-    print(f"{message}\t{likes},{retweet_count},{web_app_source},{iphone_source},{android_source}")
+    print("{}\t{},{},{},{},{}".format(message, likes, retweet_count, web_app_source, iphone_source, android_source))
 
 
 def main():

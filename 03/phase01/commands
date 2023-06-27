@@ -1,0 +1,7 @@
+sudo cp * /home/ali/docker/volumes/files_hadoop_namenode/_data
+
+hadoop jar /opt/hadoop-3.2.1/share/hadoop/tools/lib/hadoop-streaming-3.2.1.jar \
+	-file /hadoop/dfs/name/mapper.py    -mapper /hadoop/dfs/name/mapper.py \
+	-file /hadoop/dfs/name/reducer.py   -reducer /hadoop/dfs/name/reducer.py \
+	-input /user/root/input/dataset.csv -output /hadoop/dfs/name/output.txt
+

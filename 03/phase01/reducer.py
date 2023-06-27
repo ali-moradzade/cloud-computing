@@ -1,10 +1,10 @@
+#!/usr/bin/python3
+
 import sys
 
 
 def print_formatted(candidate, like, retweet, web_app_source, iphone_source, android_source):
-    print(
-        f'{candidate}\t{like}\t{retweet}\t{web_app_source}\t{iphone_source}\t{android_source}'
-    )
+    print('{}\t{}\t{}\t{}\t{}\t{}'.format(candidate, like, retweet, web_app_source, iphone_source, android_source))
 
 
 def main():
