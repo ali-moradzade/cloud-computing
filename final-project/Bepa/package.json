@@ -1,5 +1,5 @@
 {
-  "name": "Bepa",
+  "name": "bepa",
   "description": "",
   "main": "./dest/index.js",
   "exports": {
