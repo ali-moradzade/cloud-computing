@@ -8,7 +8,7 @@ export interface CoinInfo {
 }
 
 export async function getCoinInfo(name: CoinName): Promise<CoinInfo> {
-    const url = `${BEPA.baseUrl}${BEPA.dataUrl(name)}`
+    const url = `${BEPA.coin.baseUrl}${BEPA.coin.dataUrl(name)}`
     let result: CoinInfo;
 
     try {

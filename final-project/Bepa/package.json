@@ -30,12 +30,14 @@
   },
   "homepage": "https://github.com/https-github-com-ali-moradzade/cloud-computing#readme",
   "dependencies": {
+    "@types/mailgun-js": "^0.22.13",
     "axios": "*",
-    "dotenv": "*"
+    "dotenv": "*",
+    "mailgun-js": "^0.22.0"
   },
   "devDependencies": {
-    "@types/node": "*",
     "@types/bunyan": "*",
+    "@types/node": "*",
     "ts-node": "*",
     "vitest": "*"
   }
