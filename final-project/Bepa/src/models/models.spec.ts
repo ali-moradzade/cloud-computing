@@ -3,10 +3,7 @@ import {afterEach, describe, expect, it} from "vitest";
 import {AlertSubscription, Price} from "./models";
 import {BEPA} from "../config";
 
-connect(BEPA.mongodb.testUrl)
-    .then(() => {
-        console.log('connected to mongodb ..')
-    })
+connect(BEPA.mongodb.testUrl).then()
 
 describe('models', () => {
     afterEach(async () => {

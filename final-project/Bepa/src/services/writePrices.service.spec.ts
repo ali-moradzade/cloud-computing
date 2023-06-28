@@ -1,13 +1,10 @@
-import {it, expect, describe, afterEach} from "vitest";
+import {afterEach, describe, expect, it} from "vitest";
 import {connect, connection} from "mongoose";
 import {writePricesService} from "./writePrices.service";
 import {Price} from "../models/models";
 import {BEPA, CoinName} from "../config";
 
-connect(BEPA.mongodb.testUrl)
-    .then(() => {
-        console.log('connected to mongodb ..')
-    })
+connect(BEPA.mongodb.testUrl).then()
 
 describe('writePrices.service', () => {
     afterEach(async () => {
