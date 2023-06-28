@@ -1,6 +1,6 @@
 import {it, expect, describe, afterEach} from "vitest";
 import {connect, connection} from "mongoose";
-import {writePrices} from "./writePrices.service";
+import {writePricesService} from "./writePrices.service";
 import {Price} from "../models/models";
 import {BEPA, CoinName} from "../config";
 
@@ -16,7 +16,7 @@ describe('writePrices.service', () => {
 
     it('should be able to write latest price in db', async () => {
         // Arrange && Act
-        await writePrices();
+        await writePricesService();
 
         const bitcoins = await Price.find({name: CoinName.BITCOIN});
         const docoins = await Price.find({name: CoinName.DOCOIN});

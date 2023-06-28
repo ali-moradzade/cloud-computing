@@ -2,7 +2,7 @@ import {getCoinInfo} from "../utils/getCoinInfo";
 import {CoinName} from "../config";
 import {Price} from "../models/models";
 
-export async function writePrices() {
+export async function writePricesService() {
     const bitcoinInfo = await getCoinInfo(CoinName.BITCOIN);
     const bitcoin = new Price({
         name: bitcoinInfo.name,
