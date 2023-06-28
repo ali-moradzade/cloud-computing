@@ -21,6 +21,10 @@ export const BEPA = {
             return `/api/data/${name}/history`
         }
     },
+    mongodb: {
+        testUrl: 'mongodb://localhost/cloud_computing_test',
+        url: 'mongodb://localhost/cloud_computing',
+    },
     mailgun: {
         apiKey: (process.env.MAILGUN_API_KEY || throwError('No api key specified for mailgun, check .env')) as string,
         domain: (process.env.MAILGUN_DOMAIN || throwError('No domain specified for mailgun, check .env')) as string,

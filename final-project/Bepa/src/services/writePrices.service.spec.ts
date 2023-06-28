@@ -2,9 +2,9 @@ import {it, expect, describe, afterEach} from "vitest";
 import {connect, connection} from "mongoose";
 import {writePrices} from "./writePrices.service";
 import {Price} from "../models/models";
-import {CoinName} from "../config";
+import {BEPA, CoinName} from "../config";
 
-connect('mongodb://localhost/cloud_computing_test')
+connect(BEPA.mongodb.testUrl)
     .then(() => {
         console.log('connected to mongodb ..')
     })

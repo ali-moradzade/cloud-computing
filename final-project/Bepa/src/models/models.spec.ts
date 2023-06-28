@@ -1,8 +1,9 @@
 import {connect, connection} from 'mongoose'
 import {afterEach, describe, expect, it} from "vitest";
 import {AlertSubscription, Price} from "./models";
+import {BEPA} from "../config";
 
-connect('mongodb://localhost/cloud_computing_test')
+connect(BEPA.mongodb.testUrl)
     .then(() => {
         console.log('connected to mongodb ..')
     })
