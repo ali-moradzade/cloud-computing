@@ -1,9 +1,9 @@
 import {connect, connection} from 'mongoose'
 import {afterEach, describe, expect, it} from "vitest";
 import {AlertSubscription, Price} from "./models";
-import {BEPA} from "../config";
+import {PEYK} from "../config";
 
-connect(BEPA.mongodb.testUrl).then()
+connect(PEYK.mongodb.testUrl).then()
 
 describe('models', () => {
     afterEach(async () => {
