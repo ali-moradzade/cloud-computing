@@ -5,7 +5,7 @@ import {alertSubscribersService} from "./services/alertSubscribers.service";
 
 (async () => {
     await connect(BEPA.mongodb.url);
-   
+
     await writePricesService();
     await alertSubscribersService();
 })();
