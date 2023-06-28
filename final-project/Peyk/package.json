@@ -1,0 +1,43 @@
+{
+  "name": "peyk",
+  "description": "",
+  "main": "./dest/index.js",
+  "exports": {
+    ".": "./dest/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start:run": "node dest/index.js",
+    "start": "npm run build && npm run start:run",
+    "test": "npm run build && vitest --run --reporter verbose --config ./vitest.config.ts"
+  },
+  "files": [
+    "dest/**/*",
+    ".env.example"
+  ],
+  "prepare": "npm run build",
+  "prepublishOnly": "npm run test",
+  "version": "1.1.2",
+  "postversion": "git push && git push --tags",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/https-github-com-ali-moradzade/cloud-computing.git"
+  },
+  "author": "Ali Moradzade",
+  "license": "ISC",
+  "bugs": {
+    "url": "git+https://github.com/https-github-com-ali-moradzade/cloud-computing.git"
+  },
+  "homepage": "https://github.com/https-github-com-ali-moradzade/cloud-computing#readme",
+  "dependencies": {
+    "axios": "*",
+    "dotenv": "*",
+    "mongoose": "*"
+  },
+  "devDependencies": {
+    "@types/mongoose": "*",
+    "@types/node": "*",
+    "ts-node": "*",
+    "vitest": "*"
+  }
+}
