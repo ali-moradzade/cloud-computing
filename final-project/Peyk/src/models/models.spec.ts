@@ -1,12 +1,18 @@
 import {connect, connection} from 'mongoose'
-import {afterEach, describe, expect, it} from "vitest";
+import {afterAll, beforeAll, beforeEach, describe, expect, it} from "vitest";
 import {AlertSubscription, Price} from "./models";
 import {PEYK} from "../config";
 
-connect(PEYK.mongodb.testUrl).then()
+beforeAll(async () => {
+    await connect(PEYK.mongodb.testUrl)
+})
+
+afterAll(async () => {
+    await connection.db.dropDatabase();
+})
 
 describe('models', () => {
-    afterEach(async () => {
+    beforeEach(async () => {
         await connection.db.dropDatabase();
     })
 
