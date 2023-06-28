@@ -20,7 +20,7 @@ export async function alertSubscribersService() {
     }
 }
 
-async function findLastTwoPrices(coinName: CoinName):
+export async function findLastTwoPrices(coinName: CoinName):
     Promise<{ name: string, createdAt: Date, price: number }[] | undefined> {
     const lastTwoCoinPrices = await Price
         .find({name: coinName})
@@ -30,7 +30,7 @@ async function findLastTwoPrices(coinName: CoinName):
     return lastTwoCoinPrices.length < 2 ? undefined : lastTwoCoinPrices;
 }
 
-async function findMatchingAlerts(
+export async function findMatchingAlerts(
     lastTwoCoinPrices: { name: string, createdAt: Date, price: number }[],
     coinName: CoinName
 ): Promise<{ email: string, name: string, differencePercentage?: number | undefined }[]> {
