@@ -1,0 +1,27 @@
+version: '3'
+services:
+  mongodb:
+    image: 'mongo:latest'
+
+  coinnews:
+    image: amirhossein21/coinnews.linux:v0.2
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./coinnews/config.yml:/go/src/app/config.yml
+
+  bepa:
+    build:
+      context: ./Bepa
+      dockerfile: Dockerfile
+    volumes:
+      - /usr/app/node_modules
+      - ./Bepa:/usr/app
+
+  peyk:
+    build:
+      context: ./Peyk
+      dockerfile: Dockerfile
+    volumes:
+      - /usr/app/node_modules
+      - ./Peyk:/usr/app
