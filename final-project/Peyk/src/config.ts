@@ -11,7 +11,7 @@ export const PEYK = {
         port: 3000,
     },
     mongodb: {
-        testUrl: (process.env.MONGODB_URL || throwError('no MONGODB_URL, check .env')) as string,
-        url: (process.env.MONGODB_TEST_URL || throwError('no MONGODB_TEST_URL, check .env')) as string,
+        url: (process.env.MONGODB_URL || throwError('no MONGODB_URL, check .env')) as string,
+        testUrl: (process.env.MONGODB_TEST_URL || throwError('no MONGODB_TEST_URL, check .env')) as string,
     },
 }
