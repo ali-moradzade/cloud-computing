@@ -80,12 +80,12 @@ describe('alertSubscribersService', () => {
 
             await AlertSubscription.insertMany([
                 new AlertSubscription({
-                    email,
+                    email: 'non-accepted@test.com',
                     name: CoinName.BITCOIN,
                     differencePercentage: 11
                 }),
                 new AlertSubscription({
-                    email: 'non-accepted@test.com',
+                    email,
                     name: CoinName.BITCOIN,
                     differencePercentage: 9
                 })

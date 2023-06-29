@@ -40,7 +40,7 @@ export async function findMatchingAlerts(
         .find({
             name: coinName,
             differencePercentage: {
-                $gte: percentage
+                $lte: percentage
             }
         })
         .select('email') as
