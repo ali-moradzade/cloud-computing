@@ -13,8 +13,7 @@ function throwError(message: string) {
 
 export const BEPA = {
     coin: {
-        // baseUrl: 'http://localhost:8000',
-        baseUrl: 'http://coinnews:8000',
+        baseUrl: (process.env.COIN_URL || throwError('no BASE_URL specified; check .env')) as string,
         dataUrl: function (name: CoinName) {
             return `/api/data/${name}`
         },
@@ -23,10 +22,8 @@ export const BEPA = {
         }
     },
     mongodb: {
-        // testUrl: 'mongodb://localhost/cloud_computing_test',
-        testUrl: 'mongodb://mongo/cloud_computing_test',
-        // url: 'mongodb://localhost/cloud_computing',
-        url: 'mongodb://mongodb:27017/cloud_computing',
+        url: (process.env.MONGODB_URL || throwError('no MONGODB_URL, check .env')) as string,
+        testUrl: (process.env.MONGODB_TEST_URL || throwError('no MONGODB_TEST_URL, check .env')) as string,
     },
     mailgun: {
         apiKey: (process.env.MAILGUN_API_KEY || throwError('No api key specified for mailgun, check .env')) as string,
