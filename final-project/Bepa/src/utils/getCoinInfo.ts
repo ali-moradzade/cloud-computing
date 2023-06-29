@@ -4,7 +4,7 @@ import {BEPA, CoinName} from "../config";
 export interface CoinInfo {
     name: string,
     value: number,
-    updatedAt: Date,
+    createdAt: Date,
 }
 
 export async function getCoinInfo(name: CoinName): Promise<CoinInfo> {
@@ -17,7 +17,7 @@ export async function getCoinInfo(name: CoinName): Promise<CoinInfo> {
         result = {
             name: response.data?.name,
             value: response.data?.value,
-            updatedAt: new Date(response.data?.updated_at),
+            createdAt: new Date(response.data?.updated_at),
         }
     } catch (e) {
         console.log('Error while getting coin info: ', (e as Error).message)

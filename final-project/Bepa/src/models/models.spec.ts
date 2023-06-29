@@ -1,9 +1,13 @@
 import {connect, connection} from 'mongoose'
-import {afterEach, describe, expect, it} from "vitest";
+import {afterAll, afterEach, beforeEach, describe, expect, it} from "vitest";
 import {AlertSubscription, Price} from "./models";
 import {BEPA} from "../config";
 
 connect(BEPA.mongodb.testUrl).then()
+
+afterAll(async () => {
+    await connection.db.dropDatabase();
+})
 
 describe('models', () => {
     afterEach(async () => {

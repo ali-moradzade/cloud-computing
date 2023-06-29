@@ -6,8 +6,7 @@ export async function writePricesService() {
     const bitcoinInfo = await getCoinInfo(CoinName.BITCOIN);
     const bitcoin = new Price({
         name: bitcoinInfo.name,
-        // TODO: change createdAt -> updatedAt
-        createdAt: bitcoinInfo.updatedAt,
+        createdAt: bitcoinInfo.createdAt,
         price: bitcoinInfo.value,
     })
 
@@ -16,8 +15,7 @@ export async function writePricesService() {
     const docoinInfo = await getCoinInfo(CoinName.DOCOIN);
     const docoin = new Price({
         name: docoinInfo.name,
-        // TODO: change createdAt -> updatedAt
-        createdAt: docoinInfo.updatedAt,
+        createdAt: docoinInfo.createdAt,
         price: docoinInfo.value,
     })
 

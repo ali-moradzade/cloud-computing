@@ -3,7 +3,7 @@ export const PEYK = {
         port: 3000,
     },
     mongodb: {
-        testUrl: 'mongodb://localhost/cloud_computing_test',
-        url: 'mongodb://localhost/cloud_computing',
+        testUrl: 'mongodb://mongodb:27017/cloud_computing_test',
+        url: 'mongodb://mongodb:27017/cloud_computing',
     },
 }
