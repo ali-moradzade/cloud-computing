@@ -1,14 +1,14 @@
 import {IsEmail, IsNotEmpty, IsNumber, IsPositive, IsString} from "class-validator";
 
 export class SubscribeDto {
-    @IsString({
-        message: "email should be string"
+    @IsEmail({}, {
+        message: "email is not valid"
     })
     @IsNotEmpty({
         message: "email should not be empty"
     })
-    @IsEmail({}, {
-        message: "email is not valid"
+    @IsString({
+        message: "email should be string"
     })
     email: string;
 
