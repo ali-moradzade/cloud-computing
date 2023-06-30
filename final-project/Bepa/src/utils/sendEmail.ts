@@ -17,5 +17,5 @@ export async function sendEmail(email: string, subject: string, text: string) {
 
     // await mailgunClient.messages().send(data);
     console.log(data)
-    console.log('email sent!')
+    return true;
 }

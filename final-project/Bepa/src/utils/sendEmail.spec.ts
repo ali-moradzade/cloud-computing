@@ -1,7 +1,7 @@
-import {describe, it} from "vitest";
+import {describe, expect, it} from "vitest";
 import {sendEmail} from "./sendEmail";
 
-describe.skip('sendEmail', () => {
+describe('sendEmail', () => {
     it('should be able to send email', async () => {
         // Arrange
         const email = 'alimorizz1379@gmail.com';
@@ -12,6 +12,6 @@ describe.skip('sendEmail', () => {
         const result = await sendEmail(email, subject, text);
 
         // Assert
-        console.log(result)
+        expect(result).toEqual(true)
     })
 })
