@@ -8,8 +8,8 @@ router.get("/:name/price", async (req: Request, res: Response) => {
     const coinName = req.params.name;
     const result = await priceService(coinName);
 
-    res.send({
-        result
+    res.json({
+        prices: result,
     })
 });
 
@@ -20,7 +20,7 @@ router.post("/:name/subscribe", async (req: Request, res: Response) => {
 
     const result = await subscribeService(email, coinName, differencePercentage);
 
-    res.send({
+    res.json({
         result
     })
 });
