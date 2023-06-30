@@ -1,5 +1,10 @@
 import {IsEmail, IsNotEmpty, IsNumber, IsPositive, IsString} from "class-validator";
 
+export enum CoinName {
+    BITCOIN = 'bitcoin',
+    DOCOIN = 'docoin',
+}
+
 export class SubscribeDto {
     @IsEmail({}, {
         message: "email is not valid"
