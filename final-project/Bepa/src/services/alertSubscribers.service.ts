@@ -3,25 +3,19 @@ import {CoinName} from "../config";
 import {sendEmail} from "../utils/sendEmail";
 
 export async function alertSubscribersService() {
-    const lastTwoBitcoins = await findLastTwoPrices(CoinName.BITCOIN);
+    const names = [CoinName.BITCOIN, CoinName.DOCOIN];
     let isAllMailsSent = true;
 
-    if (lastTwoBitcoins) {
-        const emails = await findMatchingAlerts(lastTwoBitcoins);
-        for (const email of emails) {
-            isAllMailsSent = (await sendEmail(email, `Change of Price: ${CoinName.BITCOIN}`,
-                    `There was an increase greater than your difference percentage`))
-                && isAllMailsSent;
-        }
-    }
+    for (const name of names) {
+        const lastTwoBitcoins = await findLastTwoPrices(name);
 
-    const lastTwoDocoins = await findLastTwoPrices(CoinName.DOCOIN);
-    if (lastTwoDocoins) {
-        const emails = await findMatchingAlerts(lastTwoDocoins);
-        for (const email of emails) {
-            isAllMailsSent = (await sendEmail(email, `Change of Price: ${CoinName.DOCOIN}`,
-                `There was an increase greater than your difference percentage`))
-                && isAllMailsSent
+        if (lastTwoBitcoins) {
+            const emails = await findMatchingAlerts(lastTwoBitcoins);
+            for (const email of emails) {
+                isAllMailsSent = (await sendEmail(email, `Change of Price: ${name}`,
+                        `There was an increase greater than your difference percentage`))
+                    && isAllMailsSent;
+            }
         }
     }
 

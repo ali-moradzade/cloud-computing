@@ -3,21 +3,16 @@ import {CoinName} from "../config";
 import {Price} from "../models/models";
 
 export async function writePricesService() {
-    const bitcoinInfo = await getCoinInfo(CoinName.BITCOIN);
-    const bitcoin = new Price({
-        name: bitcoinInfo.name,
-        createdAt: bitcoinInfo.createdAt,
-        price: bitcoinInfo.value,
-    })
+    const names = [CoinName.BITCOIN, CoinName.DOCOIN]
 
-    await bitcoin.save();
+    for (const name of names) {
+        const coinInfo = await getCoinInfo(name);
+        const coin = new Price({
+            name: coinInfo.name,
+            createdAt: coinInfo.createdAt,
+            price: coinInfo.value,
+        })
 
-    const docoinInfo = await getCoinInfo(CoinName.DOCOIN);
-    const docoin = new Price({
-        name: docoinInfo.name,
-        createdAt: docoinInfo.createdAt,
-        price: docoinInfo.value,
-    })
-
-    await docoin.save();
+        await coin.save();
+    }
 }
