@@ -70,18 +70,17 @@ describe('alertSubscribersService', () => {
     describe('findMatchingAlerts', () => {
         it('should work in case of increase gte percentage', async () => {
             // Arrange
-            await Price.insertMany([
-                new Price({
-                    name: CoinName.BITCOIN,
-                    createdAt: new Date(),
-                    price: 100
-                }),
-                new Price({
-                    name: CoinName.BITCOIN,
-                    createdAt: new Date(),
-                    price: 110
-                }),
-            ])
+            await new Price({
+                name: CoinName.BITCOIN,
+                createdAt: new Date(),
+                price: 100
+            }).save();
+
+            await new Price({
+                name: CoinName.BITCOIN,
+                createdAt: new Date(),
+                price: 110
+            }).save();
 
             const email = 'accepted@test.com';
 

@@ -41,7 +41,7 @@ export async function findLastTwoPrices(coinName: CoinName):
 export async function findMatchingAlerts(
     lastTwoCoinPrices: { name: string, createdAt: Date, price: number }[],
 ): Promise<string[]> {
-    const percentage = (lastTwoCoinPrices[1].price - lastTwoCoinPrices[0].price) / lastTwoCoinPrices[0].price * 100;
+    const percentage = (lastTwoCoinPrices[0].price - lastTwoCoinPrices[1].price) / lastTwoCoinPrices[1].price * 100;
     const coinName = lastTwoCoinPrices[0].name;
 
     const results = await AlertSubscription
