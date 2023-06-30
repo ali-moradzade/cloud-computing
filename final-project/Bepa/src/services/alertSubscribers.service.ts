@@ -4,10 +4,14 @@ import {sendEmail} from "../utils/sendEmail";
 
 export async function alertSubscribersService() {
     const lastTwoBitcoins = await findLastTwoPrices(CoinName.BITCOIN);
+    let isAllMailsSent = true;
+
     if (lastTwoBitcoins) {
         const emails = await findMatchingAlerts(lastTwoBitcoins);
         for (const email of emails) {
-            sendEmail(email.email, '', '').then()
+            isAllMailsSent = (await sendEmail(email, `Change of Price: ${CoinName.BITCOIN}`,
+                    `There was an increase greater than your difference percentage`))
+                && isAllMailsSent;
         }
     }
 
@@ -15,9 +19,13 @@ export async function alertSubscribersService() {
     if (lastTwoDocoins) {
         const emails = await findMatchingAlerts(lastTwoDocoins);
         for (const email of emails) {
-            sendEmail(email.email, '', '').then()
+            isAllMailsSent = (await sendEmail(email, `Change of Price: ${CoinName.DOCOIN}`,
+                `There was an increase greater than your difference percentage`))
+                && isAllMailsSent
         }
     }
+
+    return isAllMailsSent
 }
 
 export async function findLastTwoPrices(coinName: CoinName):
@@ -32,11 +40,11 @@ export async function findLastTwoPrices(coinName: CoinName):
 
 export async function findMatchingAlerts(
     lastTwoCoinPrices: { name: string, createdAt: Date, price: number }[],
-): Promise<{ email: string, name: string, differencePercentage?: number | undefined }[]> {
+): Promise<string[]> {
     const percentage = (lastTwoCoinPrices[1].price - lastTwoCoinPrices[0].price) / lastTwoCoinPrices[0].price * 100;
     const coinName = lastTwoCoinPrices[0].name;
 
-    return await AlertSubscription
+    const results = await AlertSubscription
         .find({
             name: coinName,
             differencePercentage: {
@@ -45,8 +53,9 @@ export async function findMatchingAlerts(
         })
         .select('email') as
         {
+            _id: any,
             email: string,
-            name: string,
-            differencePercentage?: number
         }[]
+
+    return results.map(object => object.email);
 }

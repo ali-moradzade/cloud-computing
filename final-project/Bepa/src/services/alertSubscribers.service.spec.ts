@@ -97,7 +97,38 @@ describe('alertSubscribersService', () => {
 
             // Assert
             expect(emails.length).toEqual(1);
-            expect(emails[0].email).toEqual(email);
+            expect(emails[0]).toEqual(email);
+        })
+    })
+
+    describe('alertSubscribersService', () => {
+        it('should be able to send email in case of matches', async () => {
+            // Arrange
+            await Price.insertMany([
+                new Price({
+                    name: CoinName.BITCOIN,
+                    createdAt: new Date(),
+                    price: 100
+                }),
+                new Price({
+                    name: CoinName.BITCOIN,
+                    createdAt: new Date(),
+                    price: 110
+                }),
+            ])
+            await AlertSubscription.insertMany([
+                new AlertSubscription({
+                    email: 'accepted@test.com',
+                    name: CoinName.BITCOIN,
+                    differencePercentage: 1
+                })
+            ])
+
+            // Act
+            const isAlertsSend = await alertSubscribersService();
+
+            // Assert
+            expect(isAlertsSend).toBe(true)
         })
     })
 })
