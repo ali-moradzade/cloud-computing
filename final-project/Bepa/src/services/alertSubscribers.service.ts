@@ -13,7 +13,8 @@ export async function alertSubscribersService() {
             const emails = await findMatchingAlerts(lastTwoBitcoins);
             for (const email of emails) {
                 isAllMailsSent = (await sendEmail(email, `Change of Price: ${name}`,
-                        `There was an increase greater than your difference percentage`))
+                        `There was an increase greater than your difference percentage; ` +
+                        `price: ${lastTwoBitcoins[1].price}->${lastTwoBitcoins[0].price}`))
                     && isAllMailsSent;
             }
         }
