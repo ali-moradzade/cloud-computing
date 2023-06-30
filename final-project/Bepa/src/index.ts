@@ -8,10 +8,12 @@ import {alertSubscribersService} from "./services/alertSubscribers.service";
     console.log('Connected to database ..')
 
     await writePricesService();
-    console.log('latest prices written to db ..')
+    console.log('Latest prices written to db ..')
 
-    await alertSubscribersService();
-    console.log('Subscribers alerted ..')
+    const isAllMailsSent = await alertSubscribersService();
+    if (isAllMailsSent) {
+        console.log('Subscribers alerted ..')
+    }
 
     await disconnect();
     console.log('Disconnected from db')

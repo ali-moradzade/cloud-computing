@@ -32,7 +32,7 @@ export async function findLastTwoPrices(coinName: CoinName):
     Promise<{ name: string, createdAt: Date, price: number }[] | undefined> {
     const lastTwoCoinPrices = await Price
         .find({name: coinName})
-        .sort({"$natural": 1})
+        .sort({"$natural": -1})
         .limit(2) as { name: string, createdAt: Date, price: number }[];
 
     return lastTwoCoinPrices.length < 2 ? undefined : lastTwoCoinPrices;
