@@ -28,7 +28,7 @@ describe('subscribe', () => {
             const result = await subscribeService(email, name, differencePercentage);
 
             // Assert
-            const dbResult = await AlertSubscription.findOne({_id: result._id});
+            const dbResult = await AlertSubscription.findOne({name});
             expect(result.email).toEqual(dbResult.email)
         })
     })

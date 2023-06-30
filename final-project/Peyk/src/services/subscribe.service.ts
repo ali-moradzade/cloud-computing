@@ -7,5 +7,10 @@ export async function subscribeService(email: string, coinName: string, differen
         differencePercentage
     });
 
-    return await subscription.save();
+    await subscription.save();
+    return {
+        email,
+        name: coinName,
+        differencePercentage
+    }
 }
